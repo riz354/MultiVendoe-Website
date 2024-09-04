@@ -1,3 +1,30 @@
+<div class="position-relative mb-2">
+    <label class="form-label fs-6" style="font-size: 15px" for="category_id">
+        Select Category Level <span class="text-danger">*</span>
+    </label>
+    <select class="form-select form-select-md fs-6" id="category_id" name="category_id" placeholder="">
+        <option value="">Select Category</option>
+        @foreach ($sections as $section)
+            <optgroup label="{{ $section->name }}">
+                @foreach ($section->category as $category)
+                    <option value="{{ $category->id }}" @if (isset($product) && $product->category_id==$category->id)
+                        @selected(true)
+                    @endif>{{ $category->category_name }}</option>
+                    @foreach ($category->subcategories as $subcategory)
+                        <option value="{{ $subcategory->id }}"  @if (isset($product) && $product->category_id==$category->id)
+                            @selected(true)
+                        @endif>-- {{ $subcategory->category_name }}</option>
+                    @endforeach
+                @endforeach
+            </optgroup>
+        @endforeach
+    </select>
+
+    @error('category_id')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+
 <div class="mb-3">
     <label for="product_name" class="form-label">Product Name</label>
     <input type="text" class="form-control" id="product_name" name="product_name"
@@ -7,7 +34,7 @@
     @enderror
 </div>
 
-<div class=" position-relative mb-2">
+{{-- <div class=" position-relative mb-2">
     <label class="form-label  fs-6" style="font-size: 15px" for="status">Select
         Section<span class="text-danger">*</span></label>
     <select class="form-select  form-select-md fs-6" id="section_id" name="section_id" placeholder="">
@@ -22,29 +49,33 @@
     @error('section_id')
         <span class="text-danger">{{ $message }}</span>
     @enderror
-</div>
+</div> --}}
 
 
-<div class="position-relative mb-2">
-    <label class="form-label fs-6" style="font-size: 15px" for="parent_id">
+{{-- <div class="position-relative mb-2">
+    <label class="form-label fs-6" style="font-size: 15px" for="category_id">
         Select Category level<span class="text-danger">*</span>
     </label>
-    <select class="form-select form-select-md fs-6" id="parent_id" name="parent_id" placeholder="">
+    <select class="form-select form-select-md fs-6" id="category_id" name="category_id" placeholder="">
         <option value="">Select Category</option>
-
-        @if (isset($category) && $category->parent_id == 0)
-            <option value="0" selected>Main Category</option>
-        @elseif (isset($category))
-            <option value="{{ $category->parent_id }}" selected>
-                {{ $category->parent->category_name ?? '-' }}
-            </option>
-        @endif
+        @foreach ($sections as $section)
+            <optgroup label="{{$section->name}}">
+               @foreach ($section['categories'] as $category)
+              <option value="{{$category->id}}">{{$category->category_name}}</option>
+                @foreach ($category['subcatergories'] as $subcategory)
+                    <option value="{{$subcategory->id}}">{{$subcategory->category_name}}</option>
+                @endforeach
+               @endforeach
+            </optgroup>
+        @endforeach
     </select>
 
-    @error('parent_id')
+    @error('category_id')
         <span class="text-danger">{{ $message }}</span>
     @enderror
-</div>
+</div> --}}
+
+
 
 
 
@@ -148,7 +179,7 @@
 <div class="mb-3">
     <label for="meta_keywords" class="form-label">Meta Keywords</label>
     <input type="text" class="form-control" id="meta_keywords" name="meta_keywords"
-        value="{{ isset($product) ? $product->meta_keywords : '' }}">
+        value="{{ isset($product) ? implode(',',(json_decode($product->meta_keywords)) ): '' }}">
     @error('meta_keywords')
         <small class="text-danger">{{ $message }}</small>
     @enderror
@@ -175,9 +206,9 @@
     <label class="form-label  fs-6" style="font-size: 15px" for="is_featured">Select
         Is featured<span class="text-danger">*</span></label>
     <select class="form-select  form-select-md fs-6" id="is_featured" name="is_featured" placeholder="">
-        <option value="1" @if (isset($product) && $product->is_featured == 1) @selected(true) @endif>Active
+        <option value="1" @if (isset($product) && $product->is_featured == 1) @selected(true) @endif>Yes
         </option>
-        <option value="0" @if (isset($product) && $product->is_featured == 0) @selected(true) @endif>InActive
+        <option value="0" @if (isset($product) && $product->is_featured == 0) @selected(true) @endif>No
         </option>
     </select>
     <small class="text-muted">Select is_featured</small>
@@ -189,16 +220,16 @@
 
 <div class="mb-4">
     <label for="file" class="form-label">Upload Images</label>
-    <input type="file" class="filepond" name="file[]" id="file" multiple>
-    @error('file')
+    <input type="file" class="filepond" name="upload_image[]" id="upload_image" multiple>
+    @error('upload_image')
         <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
 <div class="mb-4">
-    <label for="file" class="form-label">Upload Images</label>
-    <input type="file" class="filepond" name="file[]" id="file" multiple>
-    @error('file')
+    <label for="upload_video" class="form-label">Upload Video</label>
+    <input type="file" class="filepond" name="upload_video" id="upload_video">
+    @error('upload_video')
         <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>

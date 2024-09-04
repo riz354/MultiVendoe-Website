@@ -11,14 +11,14 @@
 @section('content')
     <div class="content-wrapper" style="display:flex;justify-content:center">
 
-        <form style="width:50%;" class="mt-5" action="{{ route('admin.catelogue.categories.update', ['id' => $category->id]) }}"
-            method="POST">
+        <form style="width:50%;" class="mt-5"
+            action="{{ route('admin.catelogue.product.update', ['id' => $product->id]) }}" method="POST">
             @csrf
             <h1 class="text-center">Edit</h1>
 
 
 
-            @include('admin.catalogue.categories.form-fields')
+            @include('admin.catalogue.product.form-fields')
 
             <button type="submit" class="btn btn-primary" style="margin-left: 90%">Submit</button>
         </form>
@@ -31,10 +31,10 @@
     </script>
 
 
-<script>
-     var files = [];
-      @if (isset($attachments))
-            @forelse($attachments as $image)
+    <script>
+        var files = [];
+        @if (isset($product_images))
+            @forelse($product_images as $image)
 
                 files.push({
                     source: '{{ $image->getUrl() }}',
@@ -42,13 +42,10 @@
             @empty
             @endforelse
         @endif
-
-        FilePond.create(document.getElementById('file'), {
-
+        FilePond.create(document.getElementById('upload_image'), {
             files: files,
             styleButtonRemoveItemPosition: 'right',
             allowImagePreview: true,
-
             // imageValidateSizeMinWidth: 1000,
             // imageValidateSizeMinHeight: 1000,
             imageCropAspectRatio: '1:1',
@@ -78,32 +75,76 @@
             }
         });
 
+        var files = [];
+        @if (isset($product_video))
+            @forelse($product_video as $video)
+
+                files.push({
+                    source: '{{ $video->getUrl() }}',
+                });
+            @empty
+            @endforelse
+        @endif
+
+        FilePond.create(document.getElementById('upload_video'), {
+            files: files,
+            styleButtonRemoveItemPosition: 'right',
+            // allowImagePreview: true,
+            // imageValidateSizeMinWidth: 1000,
+            // imageValidateSizeMinHeight: 1000,
+            imageCropAspectRatio: '1:1',
+            acceptedFileTypes: ['video/quicktime', 'video/mp4'],
+            maxFileSize: '100000KB',
+            ignoredFiles: ['.ds_store', 'thumbs.db', 'desktop.ini'],
+            storeAsFile: false,
+            // allowMultiple: true,
+            maxFiles: 3,
+            // required: true,
+            checkValidity: true,
+            chunkUploads: true,
+            chunkSize: '200KB',
+            chunkForce: true,
+            server: {
+                timeout: 7000,
+                process: '/files/getUploadId',
+                revert: '/files/revertFile',
+                patch: '/files/uploadfileChunk?patch=',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            },
+            credits: {
+                label: '',
+                url: ''
+            }
+        });
 
 
-        $('#section_id').on('change',function(){
-                let section_id = $('#section_id').val();
-                // alert(section_id)
 
-                if(section_id > 0)
+        $('#section_id').on('change', function() {
+            let section_id = $('#section_id').val();
+            // alert(section_id)
+
+            if (section_id > 0)
 
                 $.ajax({
-                    type:'post',
-                    url:'{{route('admin.catelogue.categories.append-categories')}}',
-                    data:{
-                        'section_id':section_id
+                    type: 'post',
+                    url: '{{ route('admin.catelogue.product.append-categories') }}',
+                    data: {
+                        'section_id': section_id
                     },
-                    headers:{
-                        'X-CSRF-Token':'{{csrf_token()}}'
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}'
                     },
-                    success:function(response){
+                    success: function(response) {
                         $('#parent_id').empty();
                         $('#parent_id').append(response.view);
                     },
-                    error:function(response){
+                    error: function(response) {
                         alert('error')
                     }
                 })
-            })
-</script>
+        })
+    </script>
 
 @endsection

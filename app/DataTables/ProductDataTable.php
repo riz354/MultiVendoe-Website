@@ -38,11 +38,17 @@ class ProductDataTable extends DataTable
             //     return $admin ? $admin->name : '-';
             // })
             ->editColumn('vendor_id', function ($product) {
-                if ($product->admin) { // Check if the relationship is loaded
-                    $admin = $product->admin->where('vendor_id', $product->vendor_id)->first();
-                    return $admin ? $admin->name : '-';
+                // if ($product->admin) { // Check if the relationship is loaded
+                //     $admin = $product->admin->where('vendor_id', $product->vendor_id)->first();
+                //     return $admin ? $admin->name : '-';
+                // }
+                // return '-'; // If admin is null, return '-'
+                 if ($product->vendor_id ==0) { // Check if the relationship is loaded
+                    return 'Super Admin';
+                }else{
+                    return 'Vendor';
                 }
-                return '-'; // If admin is null, return '-'
+                return '-';
             })
 
             ->editColumn('admin_type', function ($product) {
@@ -92,7 +98,7 @@ class ProductDataTable extends DataTable
                 return $product->created_at;
             })
             ->editColumn('actions', function ($product) {
-                return '<a href="' . route('admin.catelogue.categories.edit', ['id' => $product->id]) . '"><i class="fa-solid fa-pen-to-square px-2"></i> </a> <a href="' . route('admin.catelogue.categories.delete', ['id' => $product->id]) . '">   <i class="fa-regular fa-trash-can px-1"></i></a>';
+                return '<a href="' . route('admin.catelogue.product.edit', ['id' => $product->id]) . '"><i class="fa-solid fa-pen-to-square px-2"></i> </a> <a href="' . route('admin.catelogue.product.delete', ['id' => $product->id]) . '">   <i class="fa-regular fa-trash-can px-1"></i></a>';
             })
             ->editColumn('status', function ($product) {
                 return $product->status == 1 ? 'active' : 'inactive';
@@ -145,7 +151,7 @@ class ProductDataTable extends DataTable
             Column::make('section_id')->title('Section'),
             Column::make('category_id')->title('Category'),
             Column::make('brand_id')->title('Brand'),
-            Column::make('vendor_id')->title('Vendor'),
+            Column::make('vendor_id')->title('Add by'),
             Column::make('admin_type')->title('Admin Type'),
             Column::make('product_name')->title('Product Name'),
             Column::make('product_code')->title('Product Code'),
