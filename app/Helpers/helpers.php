@@ -105,6 +105,7 @@ if (!function_exists('uploadFilePatch')) {
             // create output file
             $file_handle = fopen($dir . $name, 'wb');
 
+            
             // write chunkes to file
             foreach ($chunk as $filename) {
                 // get offset from filename
