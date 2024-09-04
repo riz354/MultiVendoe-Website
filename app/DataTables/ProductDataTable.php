@@ -98,7 +98,8 @@ class ProductDataTable extends DataTable
                 return $product->created_at;
             })
             ->editColumn('actions', function ($product) {
-                return '<a href="' . route('admin.catelogue.product.edit', ['id' => $product->id]) . '"><i class="fa-solid fa-pen-to-square px-2"></i> </a> <a href="' . route('admin.catelogue.product.delete', ['id' => $product->id]) . '">   <i class="fa-regular fa-trash-can px-1"></i></a>';
+                return '<a href="' . route('admin.catelogue.product.edit', ['id' => $product->id]) . '"><i class="fa-solid fa-pen-to-square px-2"></i> </a> <a href="' . route('admin.catelogue.product.delete', ['id' => $product->id]) . '">   <i class="fa-regular fa-trash-can px-1"></i></a>
+                  <a href="' . route('admin.catelogue.product.attribute.add', ['id' => $product->id]) . '"><i class="fa-solid fa-circle-plus"></i></a>';
             })
             ->editColumn('status', function ($product) {
                 return $product->status == 1 ? 'active' : 'inactive';

@@ -11,7 +11,7 @@
                         @selected(true)
                     @endif>{{ $category->category_name }}</option>
                     @foreach ($category->subcategories as $subcategory)
-                        <option value="{{ $subcategory->id }}"  @if (isset($product) && $product->category_id==$category->id)
+                        <option value="{{ $subcategory->id }}"  @if (isset($product) && $product->category_id==$subcategory->id)
                             @selected(true)
                         @endif>-- {{ $subcategory->category_name }}</option>
                     @endforeach

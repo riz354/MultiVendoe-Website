@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ProductController;
@@ -118,9 +119,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::get('edit/{id}',[ProductController::class,'edit'])->name('edit');
                 Route::post('update/{id}',[ProductController::class,'update'])->name('update');
                 Route::get('delete/{id}',[ProductController::class,'delete'])->name('delete');
-
                 Route::post('append-categories',[ProductController::class,'appendCategories'])->name('append-categories');
 
+                Route::group(['prefix'=>'attribute','as'=>'attribute.'],function(){
+                    Route::get('index',[AttributeController::class,'index'])->name('index');
+                    Route::get('add/{id}',[AttributeController::class,'create'])->name('add');
+                    Route::get('create/',[AttributeController::class,'create'])->name('create');
+
+                    Route::post('store',[AttributeController::class,'store'])->name('store');
+                    Route::get('edit/{id}',[AttributeController::class,'edit'])->name('edit');
+                    Route::post('update/{id}',[AttributeController::class,'update'])->name('update');
+                    Route::get('delete/{id}',[AttributeController::class,'delete'])->name('delete');
+
+
+                });
 
             });
         });

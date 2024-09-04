@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ProductDataTable;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -10,26 +9,26 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class AttributeController extends Controller
 {
-    public function index(ProductDataTable $dataTable)
+    // public function index(ProductDataTable $dataTable)
+    // {
+    //     $data = [];
+
+    //     return $dataTable->with($data)->render('admin.catalogue.product.index', $data);
+    // }
+
+
+    public function create($id)
     {
-        $data = [];
-
-        return $dataTable->with($data)->render('admin.catalogue.product.index', $data);
-    }
-
-
-    public function create()
-    {
+        $product = Product::where('id',$id)->first();
         $data = [
-            'sections' => Section::with('category')->get(),
-            'brands' => Brand::all(),
+            'product' => $product,
         ];
 
-        // dd(Section::with('category')->get());
+        // dd(($product->getFirstMediaUrl('product_images')));
 
-        return view('admin.catalogue.product.create', $data);
+        return view('admin.catalogue.product.attribute.create', $data);
     }
 
 
@@ -116,7 +115,6 @@ class ProductController extends Controller
                 } else {
                     dd('path not found');
                 }
-                changeImageDirectoryPermission();
             }
         }
 
@@ -129,7 +127,6 @@ class ProductController extends Controller
 
                 $product->addMedia($attachment)->toMediaCollection('product_video');
             }
-            changeImageDirectoryPermission();
         }
 
         return redirect()->route('admin.catelogue.product.index')->with('success', 'Product Updated Successfully');
@@ -201,7 +198,6 @@ class ProductController extends Controller
                 } else {
                     dd('path not found');
                 }
-                changeImageDirectoryPermission();
             }
         }
 
@@ -211,7 +207,6 @@ class ProductController extends Controller
             if ($attachment) {
                 $product->addMedia($attachment)->toMediaCollection('product_video');
             }
-            changeImageDirectoryPermission();
         }
 
 
@@ -245,27 +240,4 @@ class ProductController extends Controller
     }
 
 
-    public function appendCategories(Request $request)
-    {
-
-        // try {
-        $categories = Category::where('section_id', $request->section_id)->where('parent_id', 0)->get();
-        // dd($categories);
-        $data = [
-            'categories' => $categories
-        ];
-        $view = view('admin.catalogue.product.append-categories', $data)->render();
-        return response()->json([
-            'success' => true,
-            'view' => $view
-
-        ]);
-        // } catch (\Throwable $th) {
-        //     return response()->json([
-        //         'success' => false,
-
-
-        //     ]);
-        // }
-    }
 }

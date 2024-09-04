@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard Admin</title>
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:8001/admin/assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8001/admin/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8001/admin/assets/css/style.css">
+    <link rel="shortcut icon" href="http://127.0.0.1:8001/admin/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="http://127.0.0.1:8001/admin/assets/images/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Page Specific CSS -->
+
+    
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+<div class="container-scroller">
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <a class="navbar-brand brand-logo me-5" href="index.html"><img src="http://127.0.0.1:8001/admin/assets/images/logo.svg"
+                class="me-2" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="http://127.0.0.1:8001/admin/assets/images/logo-mini.svg"
+                alt="logo" /></a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-search d-none d-lg-block">
+                <div class="input-group">
+                    <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                        <span class="input-group-text" id="search">
+                            <i class="icon-search"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                        aria-label="search" aria-describedby="search">
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                    data-bs-toggle="dropdown">
+                    <i class="icon-bell mx-0"></i>
+                    <span class="count"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                    aria-labelledby="notificationDropdown">
+                    <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <div class="preview-icon bg-success">
+                                <i class="ti-info-alt mx-0"></i>
+                            </div>
+                        </div>
+                        <div class="preview-item-content">
+                            <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                            <p class="font-weight-light small-text mb-0 text-muted"> Just now </p>
+                        </div>
+                    </a>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <div class="preview-icon bg-warning">
+                                <i class="ti-settings mx-0"></i>
+                            </div>
+                        </div>
+                        <div class="preview-item-content">
+                            <h6 class="preview-subject font-weight-normal">Settings</h6>
+                            <p class="font-weight-light small-text mb-0 text-muted"> Private message </p>
+                        </div>
+                    </a>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <div class="preview-icon bg-info">
+                                <i class="ti-user mx-0"></i>
+                            </div>
+                        </div>
+                        <div class="preview-item-content">
+                            <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                            <p class="font-weight-light small-text mb-0 text-muted"> 2 days ago </p>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                    id="profileDropdown">
+                    <img src="http://127.0.0.1:8001/admin/assets/images/faces/face28.jpg" alt="profile" />
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                    aria-labelledby="profileDropdown">
+                    <a class="dropdown-item">
+                        <i class="ti-settings text-primary"></i> Settings </a>
+                    <a class="dropdown-item" href="http://127.0.0.1:8001/admin/logout">
+                        <i class="ti-power-off text-primary"></i> Logout </a>
+                </div>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-flex">
+                <a class="nav-link" href="#">
+                    <i class="icon-ellipsis"></i>
+                </a>
+            </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="icon-menu"></span>
+        </button>
+    </div>
+</nav>
+
+    <div class="container-fluid page-body-wrapper">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item    ">
+            <a class="nav-link" href="http://127.0.0.1:8001/admin/dashboard">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+
+                    <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                    aria-controls="ui-basic">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Settings</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item  )"> <a
+                                class="nav-link" href="http://127.0.0.1:8001/admin/update-password">Update Password</a></li>
+                        <li class="nav-item"> <a class="nav-link"
+                                href="http://127.0.0.1:8001/admin/update-admin-details">Update Details</a></li>
+
+                    </ul>
+                </div>
+            </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false"
+                aria-controls="form-elements">
+                <i class="icon-columns menu-icon"></i>
+                <span class="menu-title">Catalogue Settings</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse " id="form-elements">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item "><a class="nav-link"  href="http://127.0.0.1:8001/admin/catelogue/section/index">Sections</a></li>
+
+
+                    <li class="nav-item "><a class="nav-link"  href="http://127.0.0.1:8001/admin/catelogue/categories/index">Categories</a></li>
+                    <li class="nav-item "><a class="nav-link"  href="http://127.0.0.1:8001/admin/catelogue/brand/index">Brands</a></li>
+                    <li class="nav-item "><a class="nav-link"  href="http://127.0.0.1:8001/admin/catelogue/product/index">Products</a></li>
+
+
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                <i class="icon-bar-graph menu-icon"></i>
+                <span class="menu-title">Charts</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                <i class="icon-grid-2 menu-icon"></i>
+                <span class="menu-title">Tables</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic
+                            table</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                <i class="icon-contract menu-icon"></i>
+                <span class="menu-title">Icons</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false"
+                aria-controls="auth">
+                <i class="icon-head menu-icon"></i>
+                <span class="menu-title">User Pages</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html">
+                            Register </a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false"
+                aria-controls="error">
+                <i class="icon-ban menu-icon"></i>
+                <span class="menu-title">Error pages</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="error">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404
+                        </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500
+                        </a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../../../docs/documentation.html">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Documentation</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+        <div class="main-panel">
+            
+            
+            
+                <div class="content-wrapper" style="display:flex;justify-content:center">
+
+        <form style="width:50%;" class="mt-5"
+            action="http://127.0.0.1:8001/admin/catelogue/product/update/35" method="POST">
+            <input type="hidden" name="_token" value="XBwtP3vmRb4R96t1Y3AdFKK5P1owB7vZXCwWLm5l" autocomplete="off">            <h1 class="text-center">Edit</h1>
+
+
+
+            <div class="position-relative mb-2">
+    <label class="form-label fs-6" style="font-size: 15px" for="category_id">
+        Select Category Level <span class="text-danger">*</span>
+    </label>
+    <select class="form-select form-select-md fs-6" id="category_id" name="category_id" placeholder="">
+        <option value="">Select Category</option>
+                    <optgroup label="Clothing">
+                                    <option value="1" >Men</option>
+                                                </optgroup>
+                    <optgroup label="Electronics">
+                                    <option value="2" >Mobiles</option>
+                                            <option value="7"                              selected                        >-- smartphomne</option>
+                                                </optgroup>
+                    <optgroup label="Appliances">
+                            </optgroup>
+            </select>
+
+    </div>
+
+<div class="mb-3">
+    <label for="product_name" class="form-label">Product Name</label>
+    <input type="text" class="form-control" id="product_name" name="product_name"
+        value="David Barron">
+    </div>
+
+
+
+
+
+
+
+
+
+
+<div class=" position-relative mb-2">
+    <label class="form-label  fs-6" style="font-size: 15px" for="brand_id">Select
+        Brand<span class="text-danger">*</span></label>
+    <select class="form-select  form-select-md fs-6" id="brand_id" name="brand_id" placeholder="">
+        <option value="">Select Brand</option>
+                    <option value="1"  selected >
+                Arrow
+            </option>
+                    <option value="2" >
+                Samsung
+            </option>
+                    <option value="3" >
+                Knike
+            </option>
+                    <option value="4" >
+                MI
+            </option>
+        
+    </select>
+    </div>
+
+
+
+<div class="mb-3">
+    <label for="product_code" class="form-label">Product Code</label>
+    <input type="text" class="form-control" id="product_code" name="product_code"
+        value="Et non omnis cumque">
+    </div>
+
+<div class="mb-3">
+    <label for="product_color" class="form-label">Product Color</label>
+    <input type="text" class="form-control" id="product_color" name="product_color"
+        value="Facilis non labore a">
+    </div>
+
+
+<div class="mb-3">
+    <label for="product_price" class="form-label">Product Price</label>
+    <input type="text" class="form-control" id="product_price" name="product_price"
+        value="43">
+    </div>
+
+<div class="mb-3">
+    <label for="product_discount" class="form-label">Product Discount</label>
+    <input type="text" class="form-control" id="product_discount" name="product_discount"
+        value="Consequuntur quo est">
+    </div>
+
+<div class="mb-3">
+    <label for="product_weight" class="form-label">Product WEight</label>
+    <input type="text" class="form-control" id="product_weight" name="product_weight"
+        value="Amet ut officia non">
+    </div>
+
+<div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input type="text" class="form-control" id="description" name="description"
+        value="Obcaecati quis ex in">
+    </div>
+
+
+
+
+
+
+<div class="mb-3">
+    <label for="meta_title" class="form-label">Meta Title</label>
+    <input type="text" class="form-control" id="meta_title" name="meta_title"
+        value="Reiciendis Nam odit">
+    </div>
+
+<div class="mb-3">
+    <label for="meta_description" class="form-label">Meta description</label>
+    <input type="text" class="form-control" id="meta_description" name="meta_description"
+        value="Impedit sint non au">
+    </div>
+
+<div class="mb-3">
+    <label for="meta_keywords" class="form-label">Meta Keywords</label>
+    <input type="text" class="form-control" id="meta_keywords" name="meta_keywords"
+        value="Praesentium est numq">
+    </div>
+
+
+<div class=" position-relative mb-2">
+    <label class="form-label  fs-6" style="font-size: 15px" for="status">Select
+        Status<span class="text-danger">*</span></label>
+    <select class="form-select  form-select-md fs-6" id="status" name="status" placeholder="">
+        <option value="1"  selected >Active
+        </option>
+        <option value="0" >InActive
+        </option>
+    </select>
+    <small class="text-muted">Select status</small>
+    </div>
+
+
+<div class=" position-relative mb-2">
+    <label class="form-label  fs-6" style="font-size: 15px" for="is_featured">Select
+        Is featured<span class="text-danger">*</span></label>
+    <select class="form-select  form-select-md fs-6" id="is_featured" name="is_featured" placeholder="">
+        <option value="1"  selected >Yes
+        </option>
+        <option value="0" >No
+        </option>
+    </select>
+    <small class="text-muted">Select is_featured</small>
+    </div>
+
+
+<div class="mb-4">
+    <label for="file" class="form-label">Upload Images</label>
+    <input type="file" class="filepond" name="upload_image[]" id="upload_image" multiple>
+    </div>
+
+<div class="mb-4">
+    <label for="upload_video" class="form-label">Upload Video</label>
+    <input type="file" class="filepond" name="upload_video" id="upload_video">
+    </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-left: 90%">Submit</button>
+        </form>
+    </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023.
+            Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin
+                template</a> from BootstrapDash. All rights reserved.</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
+            with <i class="ti-heart text-danger ms-1"></i></span>
+    </div>
+</footer>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="http://127.0.0.1:8001/admin/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="http://127.0.0.1:8001/admin/assets/vendors/chart.js/chart.umd.js"></script>
+
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+ <!-- DataTables JS -->
+ <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+ 
+
+ <!-- SweetAlert2 JS -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+ <!-- DataTables Server-Side Processing -->
+ <script src="http://127.0.0.1:8001/vendor/datatables/buttons.server-side.js"></script>
+
+ <!-- DataTables Initialization Script -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+<script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+    rel="stylesheet">
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+
+    <script>
+        var files = [];
+                    
+                files.push({
+                    source: 'http://127.0.0.1:8000/storage/32/Screenshot_from_2024-08-30_16-33-24.png',
+                });
+                            FilePond.create(document.getElementById('upload_image'), {
+            files: files,
+            styleButtonRemoveItemPosition: 'right',
+            allowImagePreview: true,
+            // imageValidateSizeMinWidth: 1000,
+            // imageValidateSizeMinHeight: 1000,
+            imageCropAspectRatio: '1:1',
+            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/gif', 'application/pdf'],
+            maxFileSize: '100000KB',
+            ignoredFiles: ['.ds_store', 'thumbs.db', 'desktop.ini'],
+            storeAsFile: false,
+            allowMultiple: true,
+            maxFiles: 3,
+            // required: true,
+            checkValidity: true,
+            chunkUploads: true,
+            chunkSize: '200KB',
+            chunkForce: true,
+            server: {
+                timeout: 7000,
+                process: '/files/getUploadId',
+                revert: '/files/revertFile',
+                patch: '/files/uploadfileChunk?patch=',
+                headers: {
+                    'X-CSRF-TOKEN': 'XBwtP3vmRb4R96t1Y3AdFKK5P1owB7vZXCwWLm5l'
+                }
+            },
+            credits: {
+                label: '',
+                url: ''
+            }
+        });
+
+        var files = [];
+                    
+                files.push({
+                    source: 'http://127.0.0.1:8000/storage/33/Screenshot_from_2024-09-03_10-52-47.png',
+                });
+                    
+        FilePond.create(document.getElementById('upload_video'), {
+            files: files,
+            styleButtonRemoveItemPosition: 'right',
+            // allowImagePreview: true,
+            // imageValidateSizeMinWidth: 1000,
+            // imageValidateSizeMinHeight: 1000,
+            imageCropAspectRatio: '1:1',
+            acceptedFileTypes: ['video/quicktime', 'video/mp4'],
+            maxFileSize: '100000KB',
+            ignoredFiles: ['.ds_store', 'thumbs.db', 'desktop.ini'],
+            storeAsFile: false,
+            // allowMultiple: true,
+            maxFiles: 3,
+            // required: true,
+            checkValidity: true,
+            chunkUploads: true,
+            chunkSize: '200KB',
+            chunkForce: true,
+            server: {
+                timeout: 7000,
+                process: '/files/getUploadId',
+                revert: '/files/revertFile',
+                patch: '/files/uploadfileChunk?patch=',
+                headers: {
+                    'X-CSRF-TOKEN': 'XBwtP3vmRb4R96t1Y3AdFKK5P1owB7vZXCwWLm5l'
+                }
+            },
+            credits: {
+                label: '',
+                url: ''
+            }
+        });
+
+
+
+        $('#section_id').on('change', function() {
+            let section_id = $('#section_id').val();
+            // alert(section_id)
+
+            if (section_id > 0)
+
+                $.ajax({
+                    type: 'post',
+                    url: 'http://127.0.0.1:8001/admin/catelogue/product/append-categories',
+                    data: {
+                        'section_id': section_id
+                    },
+                    headers: {
+                        'X-CSRF-Token': 'XBwtP3vmRb4R96t1Y3AdFKK5P1owB7vZXCwWLm5l'
+                    },
+                    success: function(response) {
+                        $('#parent_id').empty();
+                        $('#parent_id').append(response.view);
+                    },
+                    error: function(response) {
+                        alert('error')
+                    }
+                })
+        })
+    </script>
+
+
+</body>
+</html>

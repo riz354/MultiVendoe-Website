@@ -105,7 +105,7 @@ if (!function_exists('uploadFilePatch')) {
             // create output file
             $file_handle = fopen($dir . $name, 'wb');
 
-            
+
             // write chunkes to file
             foreach ($chunk as $filename) {
                 // get offset from filename
@@ -207,5 +207,22 @@ if (!function_exists('apiSuccessResponse')) {
             ],
             200
         );
+    }
+}
+
+
+
+if (!function_exists('changeImageDirectoryPermission')) {
+    function changeImageDirectoryPermission()
+    {
+        $path = public_path() . '/app-assets/server-uploads';
+        // exec('chmod -R 775 ' . public_path());
+        if (is_dir($path)) {
+            exec('chmod -R 755 ' . $path);
+
+            return 'true';
+        } else {
+            return false;
+        }
     }
 }
