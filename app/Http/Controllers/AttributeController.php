@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\productAttributeDataTable;
+use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -11,17 +13,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AttributeController extends Controller
 {
-    // public function index(ProductDataTable $dataTable)
-    // {
-    //     $data = [];
-
-    //     return $dataTable->with($data)->render('admin.catalogue.product.index', $data);
-    // }
+    public function index(productAttributeDataTable $dataTable)
+    {
+        $data = [];
+        return $dataTable->with($data)->render('admin.catalogue.product.attribute.create', $data);
+    }
 
 
     public function create($id)
     {
-        $product = Product::where('id',$id)->first();
+        $product = Product::where('id',$id)->with('attributes')->first();
         $data = [
             'product' => $product,
         ];
@@ -135,96 +136,35 @@ class AttributeController extends Controller
     public function store(Request $request)
     {
 
-
-
-
-        // dd($request->all());
         $rules = [
-            'product_name' => 'required',
-            'category_id' => 'required',
-            'brand_id' => 'required',
-            'product_code' => 'required',
-            'product_color' => 'required',
-            'product_price' => 'required',
-            'product_discount' => 'required',
-            'product_weight' => 'required',
-            'description' => 'required',
-            'meta_title' => 'required',
-            'meta_description' => 'required',
-            'meta_keywords' => 'required',
-            'status' => 'required',
-            'is_featured' => 'required',
-            'upload_image' => 'required',
-            'upload_video' => 'required',
+            'product_id' => 'required',
+            'product_attribute.*.price' => 'required',
+            'product_attribute.*.stock' => 'required',
+            'product_attribute.*.size' => 'required|string',
+            'product_attribute.*.sku' => 'required',
+
         ];
 
         $request->validate($rules);
-
-        $categoryDetails = Category::where('id', $request->category_id)->first();
-        $auth = Auth::guard('admin')->user();
+        // dd($request->all());
 
 
-        $product = Product::create([
-            'section_id' => $categoryDetails->section_id,
-            'category_id' => $request->category_id,
-            'brand_id' => $request->brand_id,
-            'vendor_id' => $auth->vendor_id,
-            'admin_id' => $auth->id,
-            'admin_type' => $auth->type,
-            'product_name' => $request->product_name,
-            'product_code' => $request->product_code,
-            'product_color' => $request->product_color,
-            'product_price' => $request->product_price,
-            'product_discount' => $request->product_discount,
-            'product_weight' => $request->product_weight,
-            'description' => $request->description,
-            'meta_title' => $request->meta_title,
-            'meta_description' => $request->meta_description,
-            'meta_keywords' => json_encode(explode(',', $request->meta_keywords)),
-            'status' => $request->status,
-            'is_featured' => $request->is_featured,
+       if(isset($request->product_attribute) && count($request->product_attribute) > 0){
+        foreach($request->product_attribute as $attribute){
+            $product = Attribute::create([
+                'product_id' => $request['product_id'],
+                'price' => $attribute['price'],
+                'stock' => $attribute['stock'],
+                'size' => $attribute['size'],
+                'sku' => $attribute['sku'],
+                'status'=>1
+            ]);
 
-        ]);
-
-
-
-        if ($request->has('upload_image')) {
-
-            for ($i = 0; $i < count($request->upload_image); $i++) {
-                $attachmentPath = getFilePath($request->upload_image[$i]);
-                if (file_exists($attachmentPath)) {
-
-                    $product->addMedia($attachmentPath)->toMediaCollection('product_images');
-                } else {
-                    dd('path not found');
-                }
-            }
         }
+       }
 
 
-        if (isset($request->upload_video)) {
-            $attachment = getFilePath($request->upload_video);
-            if ($attachment) {
-                $product->addMedia($attachment)->toMediaCollection('product_video');
-            }
-        }
-
-
-
-        // if (isset($inputs['attachment']) && count($inputs['attachment']) > 0) {
-        //     for ($i = 0; $i < count($inputs['attachment']); $i++) {
-        //         $attachmentPath = getFilePath($inputs['attachment'][$i]);
-
-        //         if (file_exists($attachmentPath)) {
-        //             $dealer_incentive->addMedia($attachmentPath)->toMediaCollection('dealer_attachments');
-        //         }
-        //         changeImageDirectoryPermission();
-        //     }
-        // }
-
-
-
-        return redirect()->route('admin.catelogue.product.index')->with('success', 'Product Created Successfully');
+        return redirect()->route('admin.catelogue.product.attribute.create')->with('success', 'Product attrubute added Successfully');
     }
 
     public function delete($id)

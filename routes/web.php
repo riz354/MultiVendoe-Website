@@ -122,7 +122,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::post('append-categories',[ProductController::class,'appendCategories'])->name('append-categories');
 
                 Route::group(['prefix'=>'attribute','as'=>'attribute.'],function(){
-                    Route::get('index',[AttributeController::class,'index'])->name('index');
+                    Route::get('index/{id?}',[AttributeController::class,'index'])->name('index');
                     Route::get('add/{id}',[AttributeController::class,'create'])->name('add');
                     Route::get('create/',[AttributeController::class,'create'])->name('create');
 

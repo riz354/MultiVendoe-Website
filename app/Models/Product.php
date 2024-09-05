@@ -49,4 +49,8 @@ class Product extends Model implements HasMedia
     public function admin(){
         return $this->belongsTo(Admin::class,'vendor_id','vendor_id');
     }
+
+    public function attributes(){
+        return $this->hasMany(Attribute::class);
+    }
 }

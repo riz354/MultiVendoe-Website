@@ -1,6 +1,8 @@
 
 
     <div class="card my-3">
+        <input type="hidden" name="product_id"
+        value="{{ isset($product) ? $product->id : '' }}">
         <div class="cartd-body">
             <h1 style="text-align: center">Add Attribute </h1>
             <h6>Product Name : {{ $product->name }}</h6>
