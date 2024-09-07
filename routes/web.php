@@ -124,7 +124,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::group(['prefix'=>'attribute','as'=>'attribute.'],function(){
                     Route::get('index/{id?}',[AttributeController::class,'index'])->name('index');
                     Route::get('add/{id}',[AttributeController::class,'create'])->name('add');
-                    Route::get('create/',[AttributeController::class,'create'])->name('create');
+                    // Route::get('create/',[AttributeController::class,'create'])->name('create');
 
                     Route::post('store',[AttributeController::class,'store'])->name('store');
                     Route::get('edit/{id}',[AttributeController::class,'edit'])->name('edit');

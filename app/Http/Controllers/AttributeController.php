@@ -141,8 +141,7 @@ class AttributeController extends Controller
             'product_attribute.*.price' => 'required',
             'product_attribute.*.stock' => 'required',
             'product_attribute.*.size' => 'required|string',
-            'product_attribute.*.sku' => 'required',
-
+            'product_attribute.*.sku' => 'required|unique:attributes,sku',
         ];
 
         $request->validate($rules);
@@ -151,11 +150,15 @@ class AttributeController extends Controller
 
        if(isset($request->product_attribute) && count($request->product_attribute) > 0){
         foreach($request->product_attribute as $attribute){
-            $product = Attribute::create([
+            $product = Attribute::updateOrCreate(
+                [
+                    'size' => $attribute['size'],
+                ],
+            [
                 'product_id' => $request['product_id'],
                 'price' => $attribute['price'],
                 'stock' => $attribute['stock'],
-                'size' => $attribute['size'],
+
                 'sku' => $attribute['sku'],
                 'status'=>1
             ]);
@@ -164,7 +167,7 @@ class AttributeController extends Controller
        }
 
 
-        return redirect()->route('admin.catelogue.product.attribute.create')->with('success', 'Product attrubute added Successfully');
+        return redirect()->route('admin.catelogue.product.attribute.add',['id'=>$request->product_id])->with('success', 'Product attrubute added Successfully');
     }
 
     public function delete($id)

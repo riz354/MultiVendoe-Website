@@ -29,8 +29,14 @@
                         </div>
                         <div class="col-6">
                             <label for="size" class="form-label">Size</label>
-                            <input type="text" class="form-control" id="size" name="size"
-                                value="{{ isset($product) ? $product->size : '' }}">
+                            {{-- <input type="text" class="form-control" id="size" name="size"
+                                value="{{ isset($product) ? $product->size : '' }}"> --}}
+                                <select name="size" id="size" class="form-control">
+                                    <option value="">Select size</option>
+                                    <option value="Small">Small</option>
+                                    <option value="Large">Large </option>
+                                    <option value="Medium">Medium </option>
+                                </select>
                             @error('size')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
