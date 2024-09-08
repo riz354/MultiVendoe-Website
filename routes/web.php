@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\LiveHomePageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
@@ -16,9 +17,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/', function () {
-    return view('welcome');
+    return view('live.pages.index');
+
 });
+
+Route::get('/',[LiveHomePageController::class,'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

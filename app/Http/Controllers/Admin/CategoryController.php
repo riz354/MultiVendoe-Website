@@ -82,11 +82,11 @@ class CategoryController extends Controller
         ]);
 
         if ($request->has('file')) {
-            $category->clearMediaCollection('file');
+            $category->clearMediaCollection('categories');
             for ($i = 0; $i < count($request->file); $i++) {
                 $attachmentPath = getFilePath($request->file[$i]);
                 if (file_exists($attachmentPath)) {
-                    $category->addMedia($attachmentPath)->toMediaCollection('file');
+                    $category->addMedia($attachmentPath)->toMediaCollection('categories');
                 }
                 // changeImageDirectoryPermission();
             }
@@ -142,7 +142,7 @@ class CategoryController extends Controller
             for ($i = 0; $i < count($request->file); $i++) {
                 $attachmentPath = getFilePath($request->file[$i]);
                 if (file_exists($attachmentPath)) {
-                    $category->addMedia($attachmentPath)->toMediaCollection('file');
+                    $category->addMedia($attachmentPath)->toMediaCollection('categories');
                 }
                 // changeImageDirectoryPermission();
             }
@@ -158,7 +158,7 @@ class CategoryController extends Controller
 
         $category =  Category::where('id', $id)->first();
         $category->delete();
-        $category->clearMediaCollection('file');
+        $category->clearMediaCollection('categories');
 
         return redirect()->route('admin.catelogue.categories.index')->with('success', 'Categories deleted Successfully');
     }

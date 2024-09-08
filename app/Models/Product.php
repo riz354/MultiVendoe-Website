@@ -53,4 +53,19 @@ class Product extends Model implements HasMedia
     public function attributes(){
         return $this->hasMany(Attribute::class);
     }
+
+    public static function getDiscountedPrice($product_id){
+        $product = Product::select('product_price','product_discount','category_id')->where('id',$product_id)->where('status',1)->first();
+        $category = Category::select('category_discount')->where('id',$product->category_id)->where('status',1)->first();
+
+        if(($product->product_discount) > 0){
+            $discounted_price = $product->product_price - $product->product_discount;
+        }else if(($category->category_discount) > 0){
+            $discounted_price = $product->product_price - $category->category_discount;
+
+        }else{
+            $discounted_price =0;
+        }
+        return $discounted_price;
+    }
 }
