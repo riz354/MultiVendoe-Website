@@ -12,7 +12,9 @@ class LiveHomePageController extends Controller
     {
 
         $sections = Section::where('status', 1)->with('category')->get();
-        $featured_products = Product::where('status', 1)->orderBy('id', 'Desc')->limit(4)->get();
+        $recent_products = Product::where('status', 1)->orderBy('id', 'Desc')->limit(4)->get();
+        $featured_products = Product::where('status', 1)->where('is_featured',true)->inRandomOrder()->orderBy('id', 'Desc')->get();
+
 
         // foreach ($featured_products as $p) {
         //     dd($p->getFirstMediaUrl('product_images'));
@@ -21,7 +23,9 @@ class LiveHomePageController extends Controller
 
         $data = [
             'sections' => $sections,
-            'featured_products' => $featured_products
+            'recent_products' => $recent_products,
+            'featured_products' => $featured_products,
+
 
         ];
         return view('live.pages.index', $data);
