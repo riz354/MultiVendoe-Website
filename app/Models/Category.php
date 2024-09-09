@@ -39,5 +39,15 @@ class Category extends Model implements HasMedia
     }
 
 
+    public static function categoryDetails($category_url) {
+        $category = Category::select('id','category_name','url')->where('url',$category_url)->with('subcategories')->first();
+        $main_category_id = [$category->id];
+        $sub_category_ids = $category->subcategories->pluck('id')->toArray();
+
+        $ids = array_merge($main_category_id,$sub_category_ids);
+        return $ids;
+
+    }
+
 
 }

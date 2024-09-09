@@ -22,11 +22,11 @@
                                             @foreach ($section->category as $main_category)
                                                 @if (count($main_category->subcategories) > 0)
                                                     <div class="nav-item dropdown dropright">
-                                                        <a href="#" class="nav-link dropdown-toggle"
-                                                            data-toggle="dropdown">{{ $main_category->category_name }}
+                                                        <a href="{{route('category.url',['category_url'=>$main_category->url])}}" class="nav-link "
+                                                            >{{ $main_category->category_name }}
                                                             <i class="fa fa-angle-right float-right mt-1"></i></a>
                                                         @foreach ($main_category->subcategories as $sub_categories)
-                                                         <a href=""
+                                                         <a href="{{route('category.url',['category_url'=>$sub_categories->url])}}"
                                                                 class="dropdown-item">  -----{{ $sub_categories->category_name }}</a>
                                                         @endforeach
                                                         {{-- <div
@@ -39,7 +39,7 @@
                                                         </div> --}}
                                                     </div>
                                                 @else
-                                                    <a href=""
+                                                    <a href="{{route('category.url',['category_url'=>$main_category->url])}}"
                                                         class="dropdown-item">{{ $main_category->category_name }}</a>
                                                 @endif
                                             @endforeach
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             @else
-                                <a href="" class="nav-item nav-link">{{ $section->name }} </a>
+                                <a href="javascript:void(0)" class="nav-item nav-link">{{ $section->name }} </a>
                             @endif
                         @endforeach
 

@@ -8,9 +8,11 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\LiveHomePageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductsListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
 use App\Http\Middleware\Admin;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -24,6 +26,13 @@ Route::get('/', function () {
     return view('live.pages.index');
 
 });
+
+// $urls = Category::select('url')->get();
+// foreach($urls as $url){
+//     Route::get('/'.$url,[ProductsListingController::class,'productListing']);
+// }
+
+Route::get('/{category_url}',[ProductsListingController::class,'productListing'])->name('category.url');
 
 Route::get('/',[LiveHomePageController::class,'index']);
 
