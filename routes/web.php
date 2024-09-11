@@ -33,6 +33,8 @@ Route::get('/', function () {
 // }
 
 Route::get('/{category_url}',[ProductsListingController::class,'productListing'])->name('category.url');
+Route::post('/{category_url}',[ProductsListingController::class,'productListing'])->name('ajax-category.url');
+
 
 Route::get('/',[LiveHomePageController::class,'index']);
 
