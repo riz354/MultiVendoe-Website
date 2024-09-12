@@ -24,8 +24,38 @@
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
+
+               
+                @if (isset($products_filters))
+                    @foreach ($products_filters as $filters)
+                        @php
+                            $filterAvailAble = \App\Models\ProductsFilter::filtersAvailable(
+                                $filters->id,
+                                $category->id,
+                            );
+                        @endphp
+                        @if ($filterAvailAble == 'yes')
+                            <h5 class="section-title position-relative text-uppercase mb-3"><span
+                                    class="bg-secondary pr-3">{{ $filters->filter_name }}</span></h5>
+                            <div class="bg-light p-4 mb-30">
+                                <form>
+                                    @foreach ($filters->filter_values as $value)
+                                        <div
+                                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                            <input type="checkbox" class="custom-control-input" checked id="price-all">
+                                            <label class="custom-control-label"
+                                                for="price-all">{{ $value->filter_value }}</label>
+                                            <span class="badge border font-weight-normal">1000</span>
+                                        </div>
+                                    @endforeach
+
+                                </form>
+                            </div>
+                        @endif
+                    @endforeach
+                @endif
                 <!-- Price Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
+                {{-- <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
                         price</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -60,11 +90,11 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> --}}
                 <!-- Price End -->
 
                 <!-- Color Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
+                {{-- <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
                         color</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -99,11 +129,11 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> --}}
                 <!-- Color End -->
 
                 <!-- Size Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
+                {{-- <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
                         size</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -138,7 +168,7 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> --}}
                 <!-- Size End -->
             </div>
             <!-- Shop Sidebar End -->
@@ -155,24 +185,24 @@
                             </div>
                             <div class="ml-2">
                                 {{-- <div class="btn-group"> --}}
-                                    {{-- <button type="button" class="btn btn-sm btn-light dropdown-toggle"
+                                {{-- <button type="button" class="btn btn-sm btn-light dropdown-toggle"
                                         data-toggle="dropdown">Sorting</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="">Latest</a>
                                         <a class="dropdown-item" href="#">Popularity</a>
                                         <a class="dropdown-item" href="#">Best Rating</a>
                                     </div> --}}
-                                    <form id="sortForm" name="sortProducts">
-                                        {{-- <label for="" class="form-label">Select Sort</label> --}}
-                                        <input type="hidden" value="{{$url}}" id="url">
-                                        <select name="sort" id="sort" class="select-box">
-                                            <option value="" >Select</option>
-                                            <option value="latest_product">Latest</option>
-                                            <option value="lowest_product">Lowest Price</option>
-                                            <option value="highest_product">Higest Price</option>
+                                <form id="sortForm" name="sortProducts">
+                                    {{-- <label for="" class="form-label">Select Sort</label> --}}
+                                    <input type="hidden" value="{{ $url }}" id="url">
+                                    <select name="sort" id="sort" class="select-box">
+                                        <option value="">Select</option>
+                                        <option value="latest_product">Latest</option>
+                                        <option value="lowest_product">Lowest Price</option>
+                                        <option value="highest_product">Higest Price</option>
 
-                                        </select>
-                                    </form>
+                                    </select>
+                                </form>
                                 {{-- </div> --}}
 
                                 <div class="btn-group ml-2">
@@ -213,7 +243,7 @@
                         {{-- {!! $products->links() !!} --}}
 
                         @if (isset($_GET['sort']))
-                            {{ $products->appends(['sort'=>$_GET['sort']])->links('pagination::bootstrap-4') }}
+                            {{ $products->appends(['sort' => $_GET['sort']])->links('pagination::bootstrap-4') }}
                         @else
                             {{ $products->links('pagination::bootstrap-4') }}
                         @endif
@@ -236,26 +266,27 @@
     <script>
         $('#sort').on('change', function() {
             // $('#sortForm').submit();
-           // this.form.submit();
-           sort = $('#sort').val();
-           url = $('#url').val();
-           $.ajax({
-                    type: 'post',
-                    url: url,
-                    data: {
-                        'url': "{{route('ajax-category.url',['category_url'=>':url'])}}".replace(":url",url),
-                        'sort':sort
-                    },
-                    headers: {
-                        'X-CSRF-Token': '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                       $('.listing_product').html(response)
-                    },
-                    error: function(response) {
-                        alert('error')
-                    }
-                })
+            // this.form.submit();
+            sort = $('#sort').val();
+            url = $('#url').val();
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: {
+                    'url': "{{ route('ajax-category.url', ['category_url' => ':url']) }}".replace(":url",
+                        url),
+                    'sort': sort
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $('.listing_product').html(response)
+                },
+                error: function(response) {
+                    alert('error')
+                }
+            })
         })
     </script>
 @endsection
