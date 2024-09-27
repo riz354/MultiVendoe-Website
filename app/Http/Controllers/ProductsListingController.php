@@ -82,4 +82,16 @@ class ProductsListingController extends Controller
             }
         }
     }
+
+
+
+    public function productDetail($id){
+        $product = Product::with('attributes')->find($id);
+
+        // dd($product);
+        $data = [
+            'product'=>$product
+        ];
+        return view('live.pages.product-detail',$data);
+    }
 }

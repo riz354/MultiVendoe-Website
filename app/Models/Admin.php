@@ -11,7 +11,7 @@ class Admin extends Authenticatable
 {
     use HasFactory , Notifiable;
 
-    protected $filable = [
+    protected $fillable = [
         'name',
         'type',
         'vendor_id',

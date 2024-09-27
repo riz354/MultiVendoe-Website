@@ -24,7 +24,7 @@
 
             <div class="text-center py-4">
                 <a class="h6 text-decoration-none text-truncate"
-                    href="">{{ $product->product_name }}</a>
+                    href="{{route('product',['id'=>$product->id])}}">{{ $product->product_name }}</a>
                 <div class="d-flex align-items-center justify-content-center mt-2">
                     @if ($discounted_pric > 0)
                         <h5>{{ $discounted_pric }}</h5>

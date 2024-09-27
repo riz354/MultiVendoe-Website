@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\VendorController;
 use App\Http\Middleware\Admin;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -34,6 +35,10 @@ Route::get('/', function () {
 
 Route::get('/{category_url}',[ProductsListingController::class,'productListing'])->name('category.url');
 Route::post('/{category_url}',[ProductsListingController::class,'productListing'])->name('ajax-category.url');
+
+
+Route::get('product/{id}',[ProductsListingController::class,'productDetail'])->name('product');
+
 
 
 Route::get('/',[LiveHomePageController::class,'index']);
@@ -61,25 +66,13 @@ require __DIR__ . '/auth.php';
 
 
 
+Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
+    Route::get('login', [VendorController::class, 'loginPage'])->name('login');
+    Route::post('login', [VendorController::class, 'login'])->name('login.post');
+    Route::get('register', [VendorController::class, 'registerPage'])->name('register');
+    Route::post('register', [VendorController::class, 'register'])->name('register.post');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 
 
