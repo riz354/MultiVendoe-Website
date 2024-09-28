@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Storage;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', function () {
-    return view('live.pages.index');
+// Route::get('/', function () {
+//     return view('live.pages.index');
 
-});
+// });
 
 // $urls = Category::select('url')->get();
 // foreach($urls as $url){
@@ -37,7 +37,10 @@ Route::get('/{category_url}',[ProductsListingController::class,'productListing']
 Route::post('/{category_url}',[ProductsListingController::class,'productListing'])->name('ajax-category.url');
 
 
-Route::get('product/{id}',[ProductsListingController::class,'productDetail'])->name('product');
+Route::get('product/{id}',[ProductController::class,'productDetail'])->name('product');
+
+
+
 
 
 
@@ -64,6 +67,7 @@ require __DIR__ . '/auth.php';
 
 
 
+Route::post('add-to-cart',[ProductController::class,'addToCart'])->name('add_to_cart');
 
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
