@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LiveHomePageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsListingController;
@@ -122,7 +123,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::get('edit/{id}',[CategoryController::class,'edit'])->name('edit');
                 Route::post('update/{id}',[CategoryController::class,'update'])->name('update');
                 Route::get('delete/{id}',[CategoryController::class,'delete'])->name('delete');
-
                 Route::post('append-categories',[CategoryController::class,'appendCategories'])->name('append-categories');
 
 
@@ -135,6 +135,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::get('edit/{id}',[BrandController::class,'edit'])->name('edit');
                 Route::post('update/{id}',[BrandController::class,'update'])->name('update');
                 Route::get('delete/{id}',[BrandController::class,'delete'])->name('delete');
+
+
+            });
+
+            Route::group(['prefix'=>'coupon','as'=>'coupon.'],function(){
+                Route::get('index',[CouponController::class,'index'])->name('index');
+                Route::get('create',[CouponController::class,'create'])->name('create');
+                Route::post('store',[CouponController::class,'store'])->name('store');
+                Route::get('edit/{id}',[CouponController::class,'edit'])->name('edit');
+                Route::post('update/{id}',[CouponController::class,'update'])->name('update');
+                Route::get('delete/{id}',[CouponController::class,'delete'])->name('delete');
 
 
             });

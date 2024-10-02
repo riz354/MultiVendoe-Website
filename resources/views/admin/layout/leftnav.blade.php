@@ -60,6 +60,8 @@
                     <li class="nav-item {{ request()->routeIs('admin.catelogue.categories.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.categories.index')}}">Categories</a></li>
                     <li class="nav-item {{ request()->routeIs('admin.catelogue.brand.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.brand.index')}}">Brands</a></li>
                     <li class="nav-item {{ request()->routeIs('admin.catelogue.product.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.product.index')}}">Products</a></li>
+                    <li class="nav-item {{ request()->routeIs('admin.catelogue.coupon.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.coupon.index')}}">Coupon</a></li>
+
 
 
                 </ul>

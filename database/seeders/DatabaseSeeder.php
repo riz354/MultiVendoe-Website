@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AttributeTableSeeder::class);
         $this->call(ProductsFilterSeeder::class);
         $this->call(ProductsFilterValueSeeder::class);
+        $this->call(CouponsSeeder::class);
+
 
 
 
