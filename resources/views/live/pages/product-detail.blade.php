@@ -60,20 +60,23 @@
                         <h5>Rs. {{ $product->product_price }}</h5>
                     @endif
                     <p class="mb-4">{{ $product->description }}</p>
-                    <form action="{{route('add_to_cart')}}" method="POST">
+                    <form action="{{ route('add_to_cart') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <div class="d-flex mb-3">
                             <strong class="text-dark mr-3">Sizes:</strong>
 
-                            {{-- @foreach ($product->attributes as $e)
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="{{ $e->size }}"
-                                        name="size">
-                                    <label class="custom-control-label"
-                                        for="{{ $e->size }}">{{ $e->size }}</label>
-                                </div>
-                            @endforeach --}}
+
+                            <div class="">
+
+                                <label for="size" class="form-label">Select Size</label>
+                                <select name="size" id="size" class="form-control">
+                                    @foreach ($product->attributes as $e)
+                                        <option value="{{ $e->size }}">{{ $e->size }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
 
                         </div>
@@ -85,7 +88,8 @@
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div> --}}
-                                <input type="number" class="form-control bg-secondary border-0 text-center" min="1" name="quantity">
+                                <input type="number" class="form-control bg-secondary border-0 text-center" min="1"
+                                    name="quantity" required>
                                 {{-- <div class="input-group-btn">
                                     <button class="btn btn-primary btn-plus">
                                         <i class="fa fa-plus"></i>
@@ -94,6 +98,8 @@
                             </div>
                             <button type="submit" class="  px-3"><i class="fa mr-1"></i> Add To
                                 Cart</button>
+
+                            <a href="{{ route('add_to_cart') }}">xws</a>
                         </div>
                     </form>
 
@@ -121,8 +127,7 @@
             <div class="col">
                 <div class="bg-light p-30">
                     <div class="nav nav-tabs mb-4">
-                        <a class="nav-item nav-link text-dark active" data-toggle="tab"
-                            href="#tab-pane-1">Description</a>
+                        <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
                         <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Information</a>
                         <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
                     </div>

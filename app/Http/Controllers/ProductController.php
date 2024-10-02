@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ProductDataTable;
 use App\Models\Brand;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Section;
@@ -274,6 +275,28 @@ class ProductController extends Controller
 
     public function addToCart(Request $request)
     {
-        dd('s');
+        $cart = Cart::updateOrCreate(
+            [
+                'product_id' => $request->product_id,
+                'user_id' => Auth::id(),
+            ],
+            [
+                'size' => $request->size,
+                'quantity' => $request->quantity
+            ]
+        );
+
+        return redirect()->route('cart')->with('success','product add successfully');
+    }
+
+    public function Cart()
+    {
+
+        $data = [
+            'products' => Cart::with('product')->where('user_id', Auth::id())->get(),
+        ];
+
+
+        return view('live.pages.cart',$data);
     }
 }

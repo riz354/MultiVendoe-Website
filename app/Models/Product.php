@@ -34,38 +34,49 @@ class Product extends Model implements HasMedia
         'status',
     ];
 
-    public function section(){
+    public function section()
+    {
         return $this->belongsTo(Section::class);
     }
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function brand(){
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
-    public function vendor(){
+    public function vendor()
+    {
         return $this->belongsTo(Vendor::class);
     }
-    public function admin(){
-        return $this->belongsTo(Admin::class,'vendor_id','vendor_id');
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'vendor_id', 'vendor_id');
     }
 
-    public function attributes(){
+    public function attributes()
+    {
         return $this->hasMany(Attribute::class);
     }
 
-    public static function getDiscountedPrice($product_id){
-        $product = Product::select('product_price','product_discount','category_id')->where('id',$product_id)->where('status',1)->first();
-        $category = Category::select('category_discount')->where('id',$product->category_id)->where('status',1)->first();
+    public static function getDiscountedPrice($product_id)
+    {
+        $product = Product::select('product_price', 'product_discount', 'category_id')->where('id', $product_id)->where('status', 1)->first();
+        $category = Category::select('category_discount')->where('id', $product->category_id)->where('status', 1)->first();
 
-        if(($product->product_discount) > 0){
+        if (($product->product_discount) > 0) {
             $discounted_price = $product->product_price - $product->product_discount;
-        }else if(($category->category_discount) > 0){
+        } else if (($category->category_discount) > 0) {
             $discounted_price = $product->product_price - $category->category_discount;
-
-        }else{
-            $discounted_price =0;
+        } else {
+            $discounted_price = 0;
         }
         return $discounted_price;
+    }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

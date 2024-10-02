@@ -17,6 +17,10 @@ class VendorController extends Controller
     {
         return view('live.vendor.register');
     }
+    public function loginPage()
+    {
+        return view('admin.login');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -25,22 +29,22 @@ class VendorController extends Controller
     {
         // dd($request->all());
 
-        // $vendor = Vendor::create([
-        //     'name'=>$request->name,
-        //     'email'=>$request->email,
-        //     'mobile'=>$request->mobile_no,
-        //     'status'=>0,
-        // ]);
+        $vendor = Vendor::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'mobile'=>$request->mobile_no,
+            'status'=>0,
+        ]);
 
-        // $admin = Admin::create([
-        //     'type'=>'vendor',
-        //     'vendor_id'=>$vendor->id,
-        //     'name'=>$request->name,
-        //     'mobile'=>$request->mobile_no,
-        //     'email'=>$request->email,
-        //     'password'=>$request->password,
-        //     'status'=>0,
-        // ]);
+        $admin = Admin::create([
+            'type'=>'vendor',
+            'vendor_id'=>$vendor->id,
+            'name'=>$request->name,
+            'mobile'=>$request->mobile_no,
+            'email'=>$request->email,
+            'password'=>$request->password,
+            'status'=>0,
+        ]);
 
         $data=[
             'name'=>'rizwan'

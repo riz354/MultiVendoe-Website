@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Middleware\Admin;
 use App\Models\Category;
@@ -33,18 +34,21 @@ use Illuminate\Support\Facades\Storage;
 //     Route::get('/'.$url,[ProductsListingController::class,'productListing']);
 // }
 
+
+
+
+Route::get('product/{id}',[ProductsListingController::class,'productDetail'])->name('product');
+
+Route::post('add_to_cart',[ProductController::class,'addToCart'])->name('add_to_cart');
+Route::get('cart',[ProductController::class,'Cart'])->name('cart');
+
+
+// Simple test route with dump and die
+
+Route::get('/',[LiveHomePageController::class,'index'])->name('home');
+
 Route::get('/{category_url}',[ProductsListingController::class,'productListing'])->name('category.url');
 Route::post('/{category_url}',[ProductsListingController::class,'productListing'])->name('ajax-category.url');
-
-
-Route::get('product/{id}',[ProductController::class,'productDetail'])->name('product');
-
-
-
-
-
-
-Route::get('/',[LiveHomePageController::class,'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -67,7 +71,6 @@ require __DIR__ . '/auth.php';
 
 
 
-Route::post('add-to-cart',[ProductController::class,'addToCart'])->name('add_to_cart');
 
 
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
@@ -77,6 +80,15 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     Route::post('register', [VendorController::class, 'register'])->name('register.post');
 
 });
+
+Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+    Route::get('login', [UserController::class, 'loginPage'])->name('login');
+    Route::post('login', [UserController::class, 'login'])->name('login.post');
+    Route::get('register', [UserController::class, 'registerPage'])->name('register');
+    Route::post('register', [UserController::class, 'register'])->name('register.post');
+
+});
+
 
 
 
