@@ -6,6 +6,8 @@ use App\DataTables\ProductDataTable;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrdersProduct;
 use App\Models\Product;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -286,7 +288,7 @@ class ProductController extends Controller
             ]
         );
 
-        return redirect()->route('cart')->with('success','product add successfully');
+        return redirect()->route('cart')->with('success', 'product add successfully');
     }
 
     public function Cart()
@@ -297,6 +299,42 @@ class ProductController extends Controller
         ];
 
 
-        return view('live.pages.cart',$data);
+        return view('live.pages.cart', $data);
+    }
+
+    public function checkout()
+    {
+
+        $data = [
+            'products' => Cart::with('product')->where('user_id', Auth::id())->get(),
+        ];
+
+
+        return view('live.pages.checkout', $data);
+    }
+
+
+    public function placeOrder(Request $request)
+    {
+
+        if ($request->payment == "cod") {
+            $product = Product::where('id', $request->product_id)->first();
+            $order = Order::create([
+                'user_id' => Auth::user()->id,
+                'grand_total' => $request->total_price,
+                'payment_gateway' => $request->payment,
+            ]);
+            $order_product = OrdersProduct::create([
+                'order_id' => $order->id,
+                'user_id' => Auth::user()->id,
+                'vendor_id' => $product->vendor_id,
+            ]);
+
+            dd($request->all());
+
+            return redirect()->route('cart')->with('success', 'Ordered successfully');
+        }else if($request->payment == "paypal"){
+            return redirect()->route('paypal',['total'=>$request->total_price]);
+        }
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LiveHomePageController;
+use App\Http\Controllers\PayPallController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsListingController;
 use App\Http\Controllers\ProfileController;
@@ -42,6 +43,16 @@ Route::get('product/{id}',[ProductsListingController::class,'productDetail'])->n
 
 Route::post('add_to_cart',[ProductController::class,'addToCart'])->name('add_to_cart');
 Route::get('cart',[ProductController::class,'Cart'])->name('cart');
+
+Route::get('checkout',[ProductController::class,'checkout'])->name('checkout');
+
+Route::post('place-order',[ProductController::class,'placeOrder'])->name('place-order');
+
+
+Route::get('paypal/{total}',[PayPallController::class,'paypal'])->name('paypal');
+
+
+
 
 
 // Simple test route with dump and die
