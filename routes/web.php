@@ -7,6 +7,8 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\FacebookAuthController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\LiveHomePageController;
 use App\Http\Controllers\PayPallController;
 use App\Http\Controllers\ProductController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\redirectIfLogin;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -35,6 +38,15 @@ use Illuminate\Support\Facades\Storage;
 // foreach($urls as $url){
 //     Route::get('/'.$url,[ProductsListingController::class,'productListing']);
 // }
+
+
+
+Route::get('auth/google',[GoogleAuthController::class,'redirect'])->name('google-auth');
+Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle']);
+
+
+Route::get('auth/facebook',[FacebookAuthController::class,'redirect'])->name('facebook-auth');
+Route::get('auth/facebook/call-back',[FacebookAuthController::class,'callbackFacebook']);
 
 
 
@@ -94,10 +106,15 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+    Route::middleware([redirectIfLogin::class])->group(function () {
     Route::get('login', [UserController::class, 'loginPage'])->name('login');
+
+    });
     Route::post('login', [UserController::class, 'login'])->name('login.post');
     Route::get('register', [UserController::class, 'registerPage'])->name('register');
     Route::post('register', [UserController::class, 'register'])->name('register.post');
+    Route::get('logout', [UserController::class, 'logout'])->name('logout');
+
 
 });
 
