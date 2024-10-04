@@ -65,7 +65,11 @@ Route::post('place-order',[ProductController::class,'placeOrder'])->name('place-
 Route::get('paypal/{total}',[PayPallController::class,'paypal'])->name('paypal');
 
 
+
+Route::get('export-system-xl',[ExportController::class,'exportXlBrands'])->name('export-system-xl');
+
 Route::post('export-system',[ExportController::class,'exportCSV'])->name('export-system');
+
 
 
 
