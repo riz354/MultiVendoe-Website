@@ -10,6 +10,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FacebookAuthController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\LiveHomePageController;
 use App\Http\Controllers\PayPallController;
 use App\Http\Controllers\ProductController;
@@ -58,21 +59,28 @@ Route::post('add_to_cart',[ProductController::class,'addToCart'])->name('add_to_
 Route::get('cart',[ProductController::class,'Cart'])->name('cart');
 
 Route::get('checkout',[ProductController::class,'checkout'])->name('checkout');
-
 Route::post('place-order',[ProductController::class,'placeOrder'])->name('place-order');
-
-
 Route::get('paypal/{total}',[PayPallController::class,'paypal'])->name('paypal');
 
 
 
-Route::get('export-system-xl',[ExportController::class,'exportXlBrands'])->name('export-system-xl');
 
+Route::get('export-system-xl',[ExportController::class,'exportXlBrands'])->name('export-system-xl');
 Route::post('export-system',[ExportController::class,'exportCSV'])->name('export-system');
 
 
 
+Route::group(['prefix' => 'import', 'as' => 'import.'], function () {
+    Route::get('sample-download', [ImportController::class, 'sampleDownload'])->name('sample-download');
+    Route::post('preview-file', [ImportController::class, 'previewFile'])->name('preview-file');
+    Route::get('store-brand-preview', [ImportController::class, 'storeBrandPreview'])->name('storeBrandPreview');
+    Route::post('brands', [ImportController::class, 'saveImport'])->name('brands');
 
+
+
+
+
+});
 
 
 

@@ -47,6 +47,117 @@
         <a href="{{ route('admin.catelogue.brand.create') }}"><button class="btn btn-primary mb-3"
                 style="margin-left:95%">Add New</button></a>
         {{ $dataTable->table() }}
+
+
+
+
+
+        @if (Session::get('data'))
+            @php
+                $errorData = Session::get('data');
+            @endphp
+        @endif
+
+        <div class="card mt-5">
+            <div class="card-body text-center">
+                @if (isset($errorData))
+                    <div class="col-9 card">
+                        <h4 class="text-danger mt-1 p-1"> * Resolve Conflicts and Upload File again</h4>
+
+                        <table id="kt_table_1" class="table table-bordere nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-danger">Line #</th>
+                                    <th class="text-danger">Error's</th>
+
+                                    @foreach ($errorData[0]->values() as $key => $value)
+                                        <th class="title">{{ $key }}</th>
+                                    @endforeach
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($errorData as $key => $row)
+                                    {{-- @dd($errorData,$row) --}}
+                                    <tr>
+                                        <td class="text-danger">{{ $row->row() }}</td>
+                                        <td class="text-danger">
+                                            @foreach ($row->errors() as $value)
+                                                {{ $value }}
+                                            @endforeach
+                                        </td>
+                                        @foreach ($row->values() as $k => $value)
+                                            <td @if ($row->attribute() == $k) class="text-danger" @endif>
+                                                {{ $k == 'date' ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)->format('Y-m-d') : $value }}
+                                            </td>
+                                        @endforeach
+                                        {{-- @dd('test') --}}
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <hr>
+                    </div>
+                @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="col">
+                    <form class="form form-vertical" action="{{ route('import.preview-file') }}"
+                        enctype="multipart/form-data" method="POST">
+                        @csrf
+                        <div class="row mt-1">
+                            <div class="col position-relative">
+                                <div class="card"
+                                    style="border: 2px solid #7367F0; border-style: dashed; border-radius: 0;">
+                                    <div class="card-body">
+                                        <div class="d-block mb-1">
+                                            <label class="form-label fs-5" for="type_name">Import </label>
+                                            <input id="attachment" type="file" class="filepond" name="attachment" />
+                                        </div>
+                                        <hr>
+                                        <button type="submit" value="save"
+                                            class="btn w-100 btn-outline-success waves-effect waves-float waves-light buttonToBlockUI mb-2">
+                                            <i data-feather='save'></i>
+                                            Preview Import File
+                                        </button>
+
+                                        <a href=""
+                                            class="btn w-100 btn-outline-danger waves-effect waves-float waves-light mb-2">
+                                            <i data-feather='x'></i>
+                                            {{ __('lang.commons.cancel') }}
+                                        </a>
+
+                                        <a href="{{ route('import.sample-download') }}"
+                                            class="mt-1 btn w-100 btn-outline-info waves-effect waves-float waves-light">
+                                            <i data-feather='download'></i>
+                                            Download Sample
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-12 position-relative"></div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 @endsection
 
@@ -88,7 +199,7 @@
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                 },
-                success:function(response) {
+                success: function(response) {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -97,7 +208,7 @@
                         timer: 1500
                     });
                 },
-                error:function(response) {
+                error: function(response) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -132,7 +243,7 @@
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                 },
-                success:function(response) {
+                success: function(response) {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -141,7 +252,7 @@
                         timer: 1500
                     });
                 },
-                error:function(response) {
+                error: function(response) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",

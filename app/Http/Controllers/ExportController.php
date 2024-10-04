@@ -113,7 +113,7 @@ class ExportController extends Controller
 
     // }
 
-    
+
 
     public function exportXlBrands()
     {
