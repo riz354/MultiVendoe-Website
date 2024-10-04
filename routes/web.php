@@ -7,6 +7,7 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FacebookAuthController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\LiveHomePageController;
@@ -62,6 +63,10 @@ Route::post('place-order',[ProductController::class,'placeOrder'])->name('place-
 
 
 Route::get('paypal/{total}',[PayPallController::class,'paypal'])->name('paypal');
+
+
+Route::post('export-system',[ExportController::class,'exportCSV'])->name('export-system');
+
 
 
 
