@@ -47,6 +47,12 @@ Route::get('auth/google',[GoogleAuthController::class,'redirect'])->name('google
 Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle']);
 
 
+Route::get('pusher',function(){
+    return view('admin.pusher.index');
+});
+
+
+
 Route::get('auth/facebook',[FacebookAuthController::class,'redirect'])->name('facebook-auth');
 Route::get('auth/facebook/call-back',[FacebookAuthController::class,'callbackFacebook']);
 

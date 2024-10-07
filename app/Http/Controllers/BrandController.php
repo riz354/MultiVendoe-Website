@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\BrandDataTable;
+use App\Events\BrandCreated;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -81,6 +82,14 @@ class BrandController extends Controller
 
         ]);
 
+
+        $data = [
+            'name'=>$request->name,
+            'status'=>$request->status,
+        ];
+
+
+        event(new BrandCreated($data));
 
 
 
