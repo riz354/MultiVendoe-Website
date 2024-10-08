@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\ExportEvent;
+use App\Events\ExportFilesEvent;
 use Carbon\Carbon;
 use App\Models\Bank;
 use App\Models\Team;
@@ -36,6 +38,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\MaterialConsumption;
 use Illuminate\Support\Facades\Log;
 use App\Exceptions\GeneralException;
+use App\Jobs\SendExportNotificationJob;
 use App\Models\CommunicationChannel;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\{Collection};
@@ -49,9 +52,12 @@ use App\Models\CommunicationChannelAction;
 use App\Models\EmailCommunicationTemplate;
 use App\Models\SmsCommunicationsTemplates;
 use App\Lifetimesms\Facades\LifetimesmsFacade;
+use App\Models\Admin;
 use App\Models\CommunicationChannelNotification;
+use Illuminate\Bus\Batch;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Bus;
 
 if (!function_exists('getFileUploadId')) {
     function getFileUploadId()
@@ -226,3 +232,32 @@ if (!function_exists('changeImageDirectoryPermission')) {
         }
     }
 }
+
+
+
+// if (!function_exists('chainJobs')) {
+    function chainJobs(array $batches, array $notifyData)
+    {
+
+        $user = Admin::find($notifyData['user_id']);
+        $notificationData = [
+            'title'=>$notifyData['title'],
+            'description'=>$notifyData['description'],
+            'url'=>$notifyData['file_path'],
+            'authId'=>$user->id,
+
+        ];
+
+        $batches[] = new SendExportNotificationJob($user,$notificationData);
+        $batches[] = (new ExportFilesEvent($user,$notifyData['title']));
+
+
+        Bus::chain($batches)
+        ->catch(function (Batch $batch, Throwable $e) {
+            Log::error($e);
+        })->dispatch();
+    }
+// }
+
+
+

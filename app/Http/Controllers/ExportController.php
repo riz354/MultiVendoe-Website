@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
+require_once app_path('Helpers/helpers.php');
+
+
 class ExportController extends Controller
 {
     public function exportCSV(Request $request)
@@ -38,7 +41,17 @@ class ExportController extends Controller
         $totalRecords = $model->count('id');
         $numberOfChunks = ceil($totalRecords / $chunkSize);
 
+
+
         $path = storage_path('app/public/export/' . $file_name . '.' . $file_type);
+
+        $notifyData = [
+            'user_id'=>Auth::guard('admin')->id(),
+            'title'=>$title,
+            'file_path'=>$path,
+            'description'=>$description
+        ];
+
         $directory = dirname($path);
         if (!is_dir($directory)) {
             mkdir($directory, 0755, true);
@@ -51,6 +64,10 @@ class ExportController extends Controller
             $isLast = (int)$numberOfChunks - $i === 1 ? true : false;
             $batches[] =  GeneralExport::dispatch($model->skip($i * $chunkSize)->take($chunkSize)->orderByDesc('id')->get(), $path, $request->headings, $isLast, $file_name);
         }
+        // dd($batches);
+
+        chainJobs($batches,$notifyData);
+
 
         return [
             'status' => true,

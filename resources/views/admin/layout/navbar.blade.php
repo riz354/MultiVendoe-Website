@@ -38,6 +38,8 @@
                                 <i class="ti-info-alt mx-0"></i>
                             </div>
                         </div>
+
+                        @dd(Auth::guard('admin')->unreadNotifications)
                         <div class="preview-item-content">
                             <h6 class="preview-subject font-weight-normal">Application Error</h6>
                             <p class="font-weight-light small-text mb-0 text-muted"> Just now </p>

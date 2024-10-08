@@ -43,6 +43,13 @@ use Illuminate\Support\Facades\Storage;
 
 
 
+Route::get('/test', function () {
+    $batches = []; // Sample data
+    $notifyData = []; // Sample data
+    chainJobs($batches, $notifyData);
+});
+
+
 Route::get('auth/google',[GoogleAuthController::class,'redirect'])->name('google-auth');
 Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle']);
 
@@ -50,6 +57,8 @@ Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle'
 Route::get('pusher',function(){
     return view('admin.pusher.index');
 });
+
+
 
 
 
