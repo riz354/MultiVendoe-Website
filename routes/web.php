@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\WebSocketEvent;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SectionController;
@@ -43,10 +44,15 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-Route::get('/test', function () {
-    $batches = []; // Sample data
-    $notifyData = []; // Sample data
-    chainJobs($batches, $notifyData);
+// Route::get('/test', function () {
+//     $batches = []; // Sample data
+//     $notifyData = []; // Sample data
+//     chainJobs($batches, $notifyData);
+// });
+
+Route::get('websocket',function(){
+    // event(new WebSocketEvent('hy i am on the way to success'));
+    return view('websocket');
 });
 
 

@@ -1702,16 +1702,16 @@
         },
         {
             "name": "laravel/reverb",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/reverb.git",
-                "reference": "6cc4f390909943a155a59360052a98bd3d47acb9"
+                "reference": "61ed7bf145d0aa54bd2478b3deb481c339d8c89b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/reverb/zipball/6cc4f390909943a155a59360052a98bd3d47acb9",
-                "reference": "6cc4f390909943a155a59360052a98bd3d47acb9",
+                "url": "https://api.github.com/repos/laravel/reverb/zipball/61ed7bf145d0aa54bd2478b3deb481c339d8c89b",
+                "reference": "61ed7bf145d0aa54bd2478b3deb481c339d8c89b",
                 "shasum": ""
             },
             "require": {
@@ -1778,9 +1778,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/reverb/issues",
-                "source": "https://github.com/laravel/reverb/tree/v1.4.0"
+                "source": "https://github.com/laravel/reverb/tree/v1.4.1"
             },
-            "time": "2024-10-01T14:07:58+00:00"
+            "time": "2024-10-04T14:06:22+00:00"
         },
         {
             "name": "laravel/serializable-closure",
