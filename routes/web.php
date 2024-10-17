@@ -14,9 +14,11 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\LiveHomePageController;
 use App\Http\Controllers\PayPallController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsListingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -163,7 +165,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('login', [AdminController::class, 'login'])->name('login');
     Route::get('logout', [AdminController::class, 'logout'])->name('logout');
     Route::post('login', [AdminController::class, 'login'])->name('login.post');
+
+
     Route::middleware([Admin::class])->group(function () {
+
+        Route::get('index',[AdminController::class,'indexx'])->name('index');
+        // Route::get('create',[RoleController::class,'create'])->name('create');
+        // Route::post('store',[RoleController::class,'store'])->name('store');
+        Route::get('edit/{id}',[AdminController::class,'edit'])->name('edit');
+        Route::post('update/{id}',[AdminController::class,'update'])->name('update');
+        Route::get('delete/{id}',[AdminController::class,'delete'])->name('delete');
+
+
         Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
         Route::get('update-password', [AdminController::class, 'updatePassword'])->name('update-password');
         Route::post('update-password-post', [AdminController::class, 'updatePasswordPOst'])->name('update-password-post');
@@ -239,6 +252,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 });
 
             });
+        });
+
+        Route::group(['prefix'=>'permission','as'=>'permission.'],function(){
+            Route::get('index',[PermissionController::class,'index'])->name('index');
+            // Route::get('create',[SectionController::class,'create'])->name('create');
+            // Route::post('store',[SectionController::class,'store'])->name('store');
+            // Route::get('edit/{id}',[SectionController::class,'edit'])->name('edit');
+            // Route::post('update/{id}',[SectionController::class,'update'])->name('update');
+            // Route::get('delete/{id}',[SectionController::class,'delete'])->name('delete');
+
+        });
+        Route::group(['prefix'=>'role','as'=>'role.'],function(){
+            Route::get('index',[RoleController::class,'index'])->name('index');
+            Route::get('create',[RoleController::class,'create'])->name('create');
+            Route::post('store',[RoleController::class,'store'])->name('store');
+            Route::get('edit/{id}',[RoleController::class,'edit'])->name('edit');
+            Route::post('update/{id}',[RoleController::class,'update'])->name('update');
+            Route::get('delete/{id}',[RoleController::class,'delete'])->name('delete');
+
         });
     });
 });

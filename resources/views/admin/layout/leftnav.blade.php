@@ -61,7 +61,9 @@
                     <li class="nav-item {{ request()->routeIs('admin.catelogue.brand.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.brand.index')}}">Brands</a></li>
                     <li class="nav-item {{ request()->routeIs('admin.catelogue.product.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.product.index')}}">Products</a></li>
                     <li class="nav-item {{ request()->routeIs('admin.catelogue.coupon.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.catelogue.coupon.index')}}">Coupon</a></li>
-
+                    <li class="nav-item {{ request()->routeIs('admin.permission.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.permission.index')}}">Permissions</a></li>
+                    <li class="nav-item {{ request()->routeIs('admin.role.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.role.index')}}">Role</a></li>
+                    <li class="nav-item {{ request()->routeIs('admin.index') ? 'active ' : '' }}"><a class="nav-link"  href="{{route('admin.index')}}">User</a></li>
 
 
                 </ul>

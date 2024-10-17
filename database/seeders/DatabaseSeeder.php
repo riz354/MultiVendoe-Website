@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductsFilterSeeder::class);
         $this->call(ProductsFilterValueSeeder::class);
         $this->call(CouponsSeeder::class);
+        $this->call(PermisssionTableSeeder::class);
+
 
 
 

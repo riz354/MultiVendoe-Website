@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\AdminDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Country;
+use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -24,6 +27,12 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+    public function indexx(AdminDataTable $dataTable)
+    {
+        $data = [];
+
+        return $dataTable->with($data)->render('admin.admin.index', $data);
+    }
     public function login(Request $request)
     {
 
@@ -248,8 +257,29 @@ class AdminController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $hasRoles = [];
+        if(isset($user->roles)){
+            $hasRoles = $user->roles->pluck('id')->toArray();
+        }
+        $data =[
+            'admin'=>$user,
+            'roles'=>Role::get(),
+            'hasRoles'=>  $hasRoles
+        ];
+
+        return view('admin.admin.edit',$data);
+    }
+
+    public function update(Request $request , $id)
+    {
+
+        $admin = User::find($id);
+      $admin->syncRoles($request->role);
+
+        return redirect()->route('admin.index')->with('success', 'Admin Updated Successfully');
+
     }
 }
