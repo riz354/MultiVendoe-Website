@@ -25,8 +25,6 @@ class LiveHomePageController extends Controller
             'sections' => $sections,
             'recent_products' => $recent_products,
             'featured_products' => $featured_products,
-
-
         ];
         return view('live.pages.index', $data);
     }

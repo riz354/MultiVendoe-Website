@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\testingEvent;
 use App\Events\WebSocketEvent;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -64,6 +65,12 @@ Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle'
 
 Route::get('pusher',function(){
     return view('admin.pusher.index');
+});
+
+Route::get('webs',function(){
+    // return view('testEvent');
+    event(new testingEvent);
+    return 'none';
 });
 
 
